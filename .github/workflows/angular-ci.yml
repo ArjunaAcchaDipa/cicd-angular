@@ -2,25 +2,24 @@ name: CICD-angular
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [16, 18, 20]
+        node-version: [16, 18]
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm install
-    - run: ng build --configuration production
-    - run: npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+      - run: ng build --configuration production
+      - run: npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
